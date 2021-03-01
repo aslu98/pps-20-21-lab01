@@ -32,22 +32,30 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        if (this.direction == Direction.BACKWARD){
-            currentPos += 2;
-            direction = Direction.FORWARD;
+        if (isEmpty()){
+            return Optional.empty();
+        } else {
+            if (this.direction == Direction.BACKWARD){
+                currentPos += 2;
+                direction = Direction.FORWARD;
+            }
+            currentPos = (currentPos == list.size()) ? 0 : currentPos;
+            return Optional.of(list.get(currentPos++));
         }
-        currentPos = (currentPos == list.size()) ? 0 : currentPos;
-        return Optional.of(list.get(currentPos++));
     }
 
     @Override
     public Optional<Integer> previous() {
-        if (this.direction == Direction.FORWARD){
-            currentPos -= 2;
-            direction = Direction.BACKWARD;
+        if (isEmpty()){
+            return Optional.empty();
+        } else {
+            if (this.direction == Direction.FORWARD) {
+                currentPos -= 2;
+                direction = Direction.BACKWARD;
+            }
+            currentPos = (currentPos < 0) ? list.size() - 1 : currentPos;
+            return Optional.of(list.get(currentPos--));
         }
-        currentPos = (currentPos < 0) ? list.size() - 1 : currentPos;
-        return Optional.of(list.get(currentPos--));
     }
 
     @Override

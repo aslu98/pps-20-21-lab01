@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -51,6 +50,11 @@ public class CircularListTest {
     }
 
     @Test
+    void testNextWithEmptyList(){
+        assertEquals(list.next(), Optional.empty());
+    }
+
+    @Test
     void testClassicNext(){
         this.addElements();
         assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
@@ -65,6 +69,11 @@ public class CircularListTest {
         assertEquals(list.next(), Optional.of(SECOND_ELEMENT));
         assertEquals(list.next(), Optional.of(THIRD_ELEMENT));
         assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
+    }
+
+    @Test
+    void testPreviousWithEmptyList(){
+        assertEquals(list.previous(), Optional.empty());
     }
 
     @Test
@@ -94,7 +103,7 @@ public class CircularListTest {
     }
 
     @Test
-    void testPreviousAndNext(){
+    void testDirectionChange(){
         this.addElements();
         assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
         assertEquals(list.previous(), Optional.of(THIRD_ELEMENT));
