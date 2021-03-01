@@ -11,16 +11,4 @@ public class SimpleBankAccount extends AbstractSimpleBankAccount {
         super(holder, balance);
     }
 
-    protected boolean isWithdrawAllowed(final double amount){
-        return super.getBalance() >= amount;
-    }
-
-    @Override
-    protected boolean isDepositAllowed(double amount) {
-        return true;
-    }
-
-    @Override
-    protected void transactionSideEffect() {
-    }
 }

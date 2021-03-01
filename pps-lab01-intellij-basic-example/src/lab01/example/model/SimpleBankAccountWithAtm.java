@@ -6,17 +6,27 @@ public class SimpleBankAccountWithAtm extends AbstractSimpleBankAccount {
         super(holder, balance);
     }
 
-    protected boolean isWithdrawAllowed(final double amount){
-        return super.getBalance() + 1 >= amount;
+    public void depositWithAtm(final int usrID, final double amount) {
+        if (isTransactionWithAtmAllowed(amount)){
+            if (super.deposit(usrID, amount)){
+                this.transactionSideEffect();
+            }
+        }
     }
 
-    @Override
-    protected boolean isDepositAllowed(double amount) {
+    public void withdrawWithAtm(final int usrID, final double amount) {
+        if (isTransactionWithAtmAllowed(amount)){
+           if (super.withdraw(usrID, amount)){
+               this.transactionSideEffect();
+           }
+        }
+    }
+
+    private boolean isTransactionWithAtmAllowed(final double amount){
         return (super.getBalance() + amount) >= 1;
     }
 
-    @Override
-    protected void transactionSideEffect() {
+    protected void transactionSideEffect(){
         super.setBalance(super.getBalance() - 1);
     }
 }

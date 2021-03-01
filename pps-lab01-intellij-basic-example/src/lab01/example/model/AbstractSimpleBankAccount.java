@@ -25,29 +25,28 @@ public abstract class AbstractSimpleBankAccount implements BankAccount {
     }
 
     @Override
-    public void deposit(final int usrID, final double amount) {
-        if (checkUser(usrID) && isDepositAllowed(amount)) {
+    public boolean deposit(final int usrID, final double amount) {
+        if (checkUser(usrID)) {
             this.balance += amount;
-            transactionSideEffect();
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void withdraw(final int usrID, final double amount) {
+    public boolean withdraw(final int usrID, final double amount) {
         if (checkUser(usrID) && isWithdrawAllowed(amount)) {
             this.balance -= amount;
-            transactionSideEffect();
+            return true;
         }
+        return false;
     }
 
     private boolean checkUser(final int id) {
         return this.holder.getId() == id;
     }
 
-    protected abstract boolean isWithdrawAllowed(final double amount);
-
-    protected abstract boolean isDepositAllowed(final double amount);
-
-    protected abstract void transactionSideEffect();
-
+    private boolean isWithdrawAllowed(final double amount){
+        return balance >= amount;
+    }
 }
