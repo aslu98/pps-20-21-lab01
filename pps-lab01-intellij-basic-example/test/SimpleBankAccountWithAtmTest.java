@@ -28,7 +28,7 @@ public class SimpleBankAccountWithAtmTest extends AbstractSimpleBankAccountTest{
     @Test
     void testWrongDepositWithAtm() {
         bankAccountWithAtm.depositWithAtm(super.getAccountHolder().getId(), 100);
-        bankAccountWithAtm.depositWithAtm(2, 50);
+        bankAccountWithAtm.depositWithAtm(WRONG_USR_ID, 50);
         assertEquals(99, getBankAccount().getBalance());
     }
 
@@ -43,7 +43,7 @@ public class SimpleBankAccountWithAtmTest extends AbstractSimpleBankAccountTest{
     @Test
     void testWrongWithdrawWithAtm() {
         bankAccountWithAtm.depositWithAtm(super.getAccountHolder().getId(), 100);
-        bankAccountWithAtm.withdrawWithAtm(2, 70);
+        bankAccountWithAtm.withdrawWithAtm(WRONG_USR_ID, 70);
         assertEquals(99, getBankAccount().getBalance());
     }
 }

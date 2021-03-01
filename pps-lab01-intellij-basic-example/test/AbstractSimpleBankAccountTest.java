@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractSimpleBankAccountTest {
 
+    protected final int WRONG_USR_ID = 2;
     private AccountHolder accountHolder;
-
     private BankAccount bankAccount;
 
-    public AccountHolder getAccountHolder() {
+    protected AccountHolder getAccountHolder() {
         return accountHolder;
     }
 
@@ -46,7 +46,7 @@ public abstract class AbstractSimpleBankAccountTest {
     @Test
     void testWrongDeposit() {
         this.getBankAccount().deposit(this.getAccountHolder().getId(), 100);
-        this.getBankAccount().deposit(2, 50);
+        this.getBankAccount().deposit(WRONG_USR_ID, 50);
         assertEquals(100, getBankAccount().getBalance());
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractSimpleBankAccountTest {
     @Test
     void testWrongWithdraw() {
         this.getBankAccount().deposit(this.getAccountHolder().getId(), 100);
-        this.getBankAccount().withdraw(2, 70);
+        this.getBankAccount().withdraw(WRONG_USR_ID, 70);
         assertEquals(100, getBankAccount().getBalance());
     }
 }
