@@ -1,8 +1,9 @@
-import lab01.tdd.CircularList;
-import lab01.tdd.CircularListImpl;
+import lab01.tdd.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +15,8 @@ import java.util.Optional;
 public class CircularListTest {
 
     public static final int ADD_ATTEMPTS= 100;
-    public static final int FIRST_ELEMENT= 1;
-    public static final int SECOND_ELEMENT= 17;
+    public static final int FIRST_ELEMENT= 6;
+    public static final int SECOND_ELEMENT= 1;
     public static final int THIRD_ELEMENT= 3;
     private CircularList list;
 
@@ -50,11 +51,6 @@ public class CircularListTest {
     }
 
     @Test
-    void testNextWithEmptyList(){
-        assertEquals(list.next(), Optional.empty());
-    }
-
-    @Test
     void testClassicNext(){
         this.addElements();
         assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
@@ -69,11 +65,6 @@ public class CircularListTest {
         assertEquals(list.next(), Optional.of(SECOND_ELEMENT));
         assertEquals(list.next(), Optional.of(THIRD_ELEMENT));
         assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
-    }
-
-    @Test
-    void testPreviousWithEmptyList(){
-        assertEquals(list.previous(), Optional.empty());
     }
 
     @Test
@@ -115,6 +106,47 @@ public class CircularListTest {
         assertEquals(list.previous(), Optional.of(SECOND_ELEMENT));
         assertEquals(list.previous(), Optional.of(FIRST_ELEMENT));
         assertEquals(list.next(), Optional.of(SECOND_ELEMENT));
+    }
+
+    @Test
+    void testStrategy(){
+        list.add(SECOND_ELEMENT);
+        list.add(THIRD_ELEMENT);
+        SelectStrategy strategy = new EvenStrategy();
+        assertEquals(list.next(strategy), Optional.empty());
+    }
+
+    @Test
+    void testEvenStrategy(){
+        this.addElements();
+        SelectStrategy strategy = new EvenStrategy();
+        assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
+        assertEquals(list.next(), Optional.of(SECOND_ELEMENT));
+        assertEquals(list.next(strategy), Optional.of(FIRST_ELEMENT));
+    }
+
+    @Test
+    void testMultipleOfStrategy(){
+        this.addElements();
+        SelectStrategy strategy = new MultipleOfStrategy(3);
+        assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
+        assertEquals(list.next(strategy), Optional.of(THIRD_ELEMENT));
+    }
+
+    @Test
+    void testEqualsStrategy(){
+        this.addElements();
+        SelectStrategy strategy = new EqualsStrategy(6);
+        assertEquals(list.next(), Optional.of(FIRST_ELEMENT));
+        assertEquals(list.next(strategy), Optional.of(FIRST_ELEMENT));
+    }
+
+    @Test
+    void testEmptyList(){
+        assertEquals(list.previous(), Optional.empty());
+        assertEquals(list.next(), Optional.empty());
+        SelectStrategy strategy = new EvenStrategy();
+        assertEquals(list.next(strategy), Optional.empty());
     }
 
     void addElements(){

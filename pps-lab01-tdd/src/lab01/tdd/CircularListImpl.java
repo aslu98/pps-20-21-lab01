@@ -1,5 +1,7 @@
 package lab01.tdd;
 
+import com.sun.source.tree.UsesTree;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +67,18 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
-        return Optional.empty();
+        if (isEmpty()){
+            return Optional.empty();
+        } else {
+            int count = 0;
+            while (!strategy.apply(this.next().get())){
+                count += 1;
+                if (count == list.size()){
+                    return Optional.empty();
+                }
+            }
+            return Optional.of(list.get(currentPos - 1));
+        }
     }
 }
+
