@@ -20,10 +20,8 @@ public class SelectStrategyTest {
 
     @Test
     void testStrategy(){
-        final int firstOddNum = 3;
-        final int secondOddNum = 11;
-        list.add(firstOddNum);
-        list.add(secondOddNum);
+        list.add(3);
+        list.add(11);
         assertEquals(list.next(strategyFactory.getStrategy(Strategies.EVEN, Optional.empty())), Optional.empty());
     }
 
