@@ -1,4 +1,4 @@
-package lab01.tdd;
+package lab01.tdd.strategy;
 
 public class EvenStrategy implements SelectStrategy {
     @Override

@@ -1,6 +1,6 @@
 package lab01.tdd;
 
-import com.sun.source.tree.UsesTree;
+import lab01.tdd.strategy.SelectStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
